@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}MySite{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'signup' %}">Register</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>My Site</h1>
+    <p>Welcome to my site!</p>
+
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.email }}!</p>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>
