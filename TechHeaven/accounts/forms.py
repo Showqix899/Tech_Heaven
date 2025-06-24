@@ -14,6 +14,13 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('email', 'password1', 'password2')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })
+
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -23,12 +30,45 @@ class CustomAuthenticationForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         if not user.is_active:
             raise forms.ValidationError("This account is inactive. Please activate via email.", code='inactive')
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })
 
     
 
     
 class CustomPasswordResetForm(PasswordResetForm):
-    pass
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })
 
 class CustomSetPasswordForm(SetPasswordForm):
-    pass
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class AdminInvitationForm(forms.Form):
+
+    email = forms.EmailField(label='Email', required=True, widget=forms.EmailInput(attrs={'placeholder': 'Enter email address'}))
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        return email
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Admin Registration{% endblock %}
+{% block content %}
+  <h2>Admin Registration</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Register Admin</button>
+  </form>
+  {% if message %}
+    <p class="alert alert-info">{{ message }}</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Product Detail -{{query}}
+{% endblock %}
+
+{% block content %}
+<h1>product details</h1>
+  {% for product in products %}
+  <h2>{{ product.name }}</h2>
+  <p>{{ product.description }}</p>
+{% endfor %}
+
+{% endblock %}
