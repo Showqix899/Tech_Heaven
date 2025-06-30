@@ -7,7 +7,13 @@ from .views import(
     product_create,
     product_update,
     product_delete,
-    product_search
+    product_search,
+    category_add,
+    color_add,
+    list_categories_and_colors,
+    delete_category,
+    delete_color,
+
 )
 
 
@@ -18,6 +24,13 @@ urlpatterns = [
     path('product/update/<uuid:product_id>/', product_update, name='product_update'),
     path('product/delete/<uuid:product_id>/', product_delete, name='product_delete'),
     path('product/search/', product_search, name='search'),
+    path('category/add/', category_add, name='category_add'),
+    path('color/add/', color_add, name='color_add'),
+    path('categories-colors/list/', list_categories_and_colors, name='list_categories_and_colors'),
+    path('category/delete/<uuid:category_id>/', delete_category, name='delete_category'),
+    path('color/delete/<uuid:color_id>/', delete_color, name='delete_color'),
+
+
 ]
 
 if settings.DEBUG:

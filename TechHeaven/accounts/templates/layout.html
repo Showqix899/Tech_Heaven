@@ -39,10 +39,11 @@
             Dropdown
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'product_create'%}">Add Product</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            {% if user.role == "ADMIN" %}
+                        <li><a class="dropdown-item" href="{% url 'product_create'%}">Add Product</a></li>
+                        <li><a class="dropdown-item" href="{% url 'list_categories_and_colors'%}">list of categories and colors</a></li>
+            {% endif %}
+            
           </ul>
         </li>
         <li class="nav-item">

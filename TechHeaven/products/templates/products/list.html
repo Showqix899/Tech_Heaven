@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+
+{% block title %}List{% endblock %}
+
+{% block content %}
+<div class = "w-100 d-flex">
+    <div class="w-50  p-3 d-flex flex-column align-items-center">
+        <h4>Catagories</h4>
+        <ul class ="list-group w-100">
+            {% for category in categories %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <li class="list-group-item">{{category.name}}</li>
+                    <form method="POST" action="{% url 'delete_category' category.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </ul>
+        <button class="btn btn-primary"><a href="{% url 'category_add'%}" style="text-decoration: none;color:white">Add Category</a></button>
+    </div>
+    <div class="w-50  p-3 d-flex flex-column align-items-center">
+        <h4>Colors</h4>
+        <ul class ="list-group w-100">
+            {% for color in colors %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <li class="list-group-item">{{color.name}}</li>
+                    <form method="POST" action="{% url 'delete_color' color.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </ul>
+        <button class="btn btn-primary"><a href="{% url 'color_add'%}" style="text-decoration: none; color:white;">Add Color</a></button>
+
+    </div>
+        
+{% endblock %}
