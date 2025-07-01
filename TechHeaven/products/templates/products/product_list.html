@@ -5,18 +5,64 @@
 {% endblock %}
 
 {% block content %}
-  {% if products %}
+{% comment %} {% if products %}
+  <div class="w-100 d-flex justify-content-left gap-5 mt-4">
+
     {% for product in products %}
-    <div class="card" style="width: 18rem;">
+    <div class="card shadow-lg rounded-5 col-lg-3 col-md-4 col-sm-12 p-2">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" />
+        {% endif %}
+        <div class="card-body ">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <div class="card-text d-flex flex-column mt-3 gap-2">
+            <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+          {% if user.role == "ADMIN" %}
+               <a href="{%url 'product_delete' product.id %}" class="btn btn-danger">delete</a>
+                <a href="{% url 'product_update' product.id %}" class="btn btn-warning">Update</a>
+          {% endif %} 
+          </div>
+        </div>
+      </div> 
+
+
+
+      
+  </div>
+
+{% else %}
+
+  <div class="w-100 p-5 container d-flex justify-content-center align-items-center">
+    <div class="alert alert-warning" role="alert">
+      No products found.
+    </div>
+  </div>
+{% endif %} {% endcomment %}
+
+  <div class="w-100 row justify-content-start gap-3 mt-4">
+    {% for product in products %}
+      <div class="card shadow-lg rounded-3 col-lg-3 col-md-4 col-sm-12 p-2">
         {% if product.image %}
           <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" />
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.description }}</p>
-          <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+          <div class="card-text d-flex flex-column mt-3 gap-2">
+            <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+            {% if user.role == "ADMIN" %}
+              <a href="{% url 'product_delete' product.id %}" class="btn btn-danger">Delete</a>
+              <a href="{% url 'product_update' product.id %}" class="btn btn-warning">Update</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="w-100 p-5 container d-flex justify-content-center align-items-center">
+        <div class="alert alert-warning" role="alert">
+          No products found.
         </div>
       </div>
     {% endfor %}
-  {% endif %}
+  </div>
+
 {% endblock %}
