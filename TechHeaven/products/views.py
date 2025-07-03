@@ -4,6 +4,7 @@ from .forms import ProductForm, CategoryForm, ColorForm
 from django.db.models import Q
 from accounts.decorators import admin_required
 from django.http import HttpResponse
+from cart.forms import AddToCartForm
 
 
 # Create your views here.
@@ -53,7 +54,8 @@ def product_search(request):
 def product_detail(request, product_id):
     try:
         product = Product.objects.get(id=product_id)
-        return render(request, 'products/product_detail.html', {'product': product})
+        add_to_cart_form = AddToCartForm(initial={'quantity': 1})  # Initialize form with default quantity
+        return render(request, 'products/product_detail.html', {'product': product, 'add_to_cart_form': add_to_cart_form})
     except Product.DoesNotExist:
         return render(request, 'products/product_detail.html', {'error': 'Product not found.'})
     

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  View Cart
+{% endblock %}
+
+{% block content %}
+
+
+<div class="w-100 mt-4 d-flex flex-column justify-content-center align-items-center gap-4">
+{% if cart.items.all%}
+<h2 class="text-center">Your Cart</h2>
+<h3 class=""><b>Total Amount : </b>{{cart.total_price}}</h3>
+{% for item in cart.items.all %}
+<div class="w-100   d-flex justify-content-between align-items-center">
+      <div class="card ">
+          <div>
+            {% if not item.product.image %}
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png" alt="no img" class="img-fluid">
+            {% else %}
+              <img src="{{ item.product.image.url }}" class="card-img-top img-fluid" alt="img not found" style="height: 300px; width: 400px; object-fit: cover;">
+            {% endif %}
+          </div>
+          
+      </div>
+      <div class="card-body p-4">
+            <p class="card-title fw-bold">{{ item.product.name }}</p>
+              <p class="card-text"><b>Price:</b> {{ item.product.price }} bdt</p>
+            <p class="card-text"><b>Quantity:</b> {{ item.quantity }}</p>
+            <p class="card-text"><b>Total:</b> {{ item.total_price }} bdt</p>
+
+            <p class="card-text"><b>Added on:</b> {{ item.created_at }}</p>
+            <div class="w-100 d-flex">
+                  <a href="{% url 'remove_cart_item' item.id %}" class="btn btn-outline-danger">remove</a>
+                  <a href="{% url 'single_order_placing' item.id %}" class="btn btn-outline-success ms-2">place order</a>
+            </div>
+      </div>
+</div>
+
+{% endfor %}
+
+<div class="w-100 p-5 d-flex justify-content-center" ><a href="{%url 'place_order'%}" class="btn btn-outline-success">place order</a></div>
+
+
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+</div>
+
+{% endblock %}
